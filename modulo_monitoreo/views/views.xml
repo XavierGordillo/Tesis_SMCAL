@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <!--Accion de ventana Carrera-->
+        <record id="action_view_estacion" model="ir.actions.act_window">
+            <field name="name">Estaciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mo.estacion</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <!--<field name="search_view_id" ref="da_silabo.view_docente_search_valoracion"/>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear una nueva Estación
+                </p>
+            </field>
+        </record>
+
+        <!--MENÚ-->
+        <menuitem id="menu_main_monitoreo_calidad_aire"
+                   name="Monitoreo CA"
+                   groups = "modulo_monitoreo.res_groups_administrador,modulo_monitoreo.res_groups_encargadolab"
+                   action="modulo_monitoreo.action_view_estacion"/>
+
+    </data>
+</odoo>

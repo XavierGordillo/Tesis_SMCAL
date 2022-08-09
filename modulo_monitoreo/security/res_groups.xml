@@ -1,0 +1,17 @@
+<odoo>
+    <record id="module_monitoreo_calidad_aire" model="ir.module.category">
+        <field name="name">Monitoreo de la Calidad del Aire</field>
+    </record>
+
+    <record id="res_groups_administrador" model="res.groups">
+        <field name="name">Administrador</field>
+        <field name="category_id" ref="modulo_monitoreo.module_monitoreo_calidad_aire"/>
+        <field name="users" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="res_groups_encargadolab" model="res.groups">
+        <field name="name">Encargado del Laboratorio</field>
+        <field name="category_id" ref="modulo_monitoreo.module_monitoreo_calidad_aire"/>
+    </record>
+
+</odoo>
