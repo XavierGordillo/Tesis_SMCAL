@@ -48,6 +48,56 @@
             </field>
         </record>
 
+
+        <!--Vista Form Estacion-->
+        <record id="view_form_estacion" model="ir.ui.view">
+            <field name="name">view.form.mo.estacion</field>
+            <field name="model">mo.estacion</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="url_servicio" required="1"/>
+                                <button
+                                    string="Validar URL"
+                                    type="object"
+                                    name="validarURL"
+                                    class="btn btn-primary"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <group>
+                                <field name="temperatura"/>
+                                <field name="humedad"/>
+                                <field name="co2"/>
+                                <field name="tvoc"/> <!-- domain="['|','|', ('id','=',31),('id','=',32),('id','=',33)]"-->
+                            </group>
+                        </group>
+                        <group>
+                            <field name="validar" required="1"/>
+                            <field name="estado" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Vista Tree Estacion-->
+        <record id="view_tree_estacion" model="ir.ui.view">
+            <field name="name">view.tree.mo.estacion</field>
+            <field name="model">mo.estacion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="url_servicio"/>
+                    <field name="estado"/>
+                </tree>
+            </field>
+        </record>
+
          <!--act_window-->
         <!--Accion de ventana Usuario-->
         <record id="action_view_encargado" model="ir.actions.act_window">
@@ -76,6 +126,22 @@
                     Crear una nueva Estación
                 </p>
             </field>
+        </record>
+
+        <!--Accion de ventana Form eSTAcion-->
+        <record id="action_view_estacion_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="modulo_monitoreo.view_form_estacion"/>
+            <field name="act_window_id" ref="action_view_estacion"/>
+        </record>
+
+        <!--Accion de ventana Tree eSTAcion-->
+        <record id="action_view_estacion_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="modulo_monitoreo.view_tree_estacion"/>
+            <field name="act_window_id" ref="action_view_estacion"/>
         </record>
 
 
