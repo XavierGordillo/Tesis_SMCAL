@@ -2,6 +2,10 @@ from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 
 
+class ResUser(models.Model):
+    _inherit = "res.users"
+    es_administrador = fields.Boolean(string='Es Administrador', store=True)
+
 class Estacion(models.Model):
     _name = "mo.estacion"
     _description = "Estación"
