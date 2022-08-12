@@ -77,6 +77,9 @@
                             </group>
                         </group>
                         <group>
+                            <field name="horario_id"/>
+                        </group>
+                        <group>
                             <field name="validar" required="1"/>
                             <field name="estado" required="1"/>
                         </group>
@@ -94,6 +97,42 @@
                     <field name="name"/>
                     <field name="url_servicio"/>
                     <field name="estado"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!--Vista Form Horario-->
+        <record id="view_form_horario" model="ir.ui.view">
+            <field name="name">view.form.mo.horario</field>
+            <field name="model">mo.horario</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="hora_desde" required="1" widget="float_time"/>
+                                <field name="hora_hasta" required="1" widget="float_time"/>
+                                <field name="estacion_ids"/>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Vista Tree Horario-->
+        <record id="view_tree_horario" model="ir.ui.view">
+            <field name="name">view.tree.mo.horario</field>
+            <field name="model">mo.horario</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="hora_desde"/>
+                    <field name="hora_hasta"/>
+                    <field name="estacion_ids"/>
                 </tree>
             </field>
         </record>
@@ -145,6 +184,37 @@
         </record>
 
 
+        <!--Accion de ventana Horarios-->
+        <record id="action_view_horario" model="ir.actions.act_window">
+            <field name="name">Horarios</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mo.horario</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="search_view_id" ref="da_silabo.view_docente_search_valoracion"/>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear un nuevo Horario
+                </p>
+            </field>
+        </record>
+
+        <!--Accion de ventana Form horario-->
+        <record id="action_view_horario_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="modulo_monitoreo.view_form_horario"/>
+            <field name="act_window_id" ref="action_view_horario"/>
+        </record>
+
+        <!--Accion de ventana Tree horario-->
+        <record id="action_view_horario_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="modulo_monitoreo.view_tree_horario"/>
+            <field name="act_window_id" ref="action_view_horario"/>
+        </record>
+
+
 
         <!--MENÚ-->
         <menuitem id="menu_main_monitoreo_calidad_aire"
@@ -191,7 +261,13 @@
         <menuitem id="menu_temperatura"
                   name="Datos temperatura"
                   parent="modulo_monitoreo.menu_visualizar"
-                  action="modulo_monitoreo.action_view_estacion"/>/>
+                  action="modulo_monitoreo.action_view_estacion"/>
+
+        <menuitem id="menu_horarios"
+                  name="Horarios"
+                  groups = "modulo_monitoreo.res_groups_administrador"
+                  parent="menu_main_monitoreo_calidad_aire"
+                  action="modulo_monitoreo.action_view_horario"/>
 
     </data>
 </odoo>
