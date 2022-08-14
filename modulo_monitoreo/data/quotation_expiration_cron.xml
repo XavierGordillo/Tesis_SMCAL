@@ -13,5 +13,18 @@
      <field name="model_id" ref="modulo_monitoreo.model_mo_estacion"/>
    </record>
  </data>
+  <data noupdate="1">
+   <record id="notificar_calidad_aire" model="ir.cron">
+     <field name="state">code</field>
+     <field name="code">model.notificar()</field>
+     <field name="interval_type">minutes</field>
+     <field name="name">Notificar la Calidad del Aire</field>
+     <field name="numbercall">-1</field>
+     <field name="doall">False</field>
+     <field name="active">True</field>
+     <field name="interval_number">1</field>
+     <field name="model_id" ref="modulo_monitoreo.model_mo_estacion"/>
+   </record>
+  </data>
 
 </odoo>

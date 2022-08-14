@@ -1,6 +1,6 @@
 from odoo import fields, models, api
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo.exceptions import ValidationError
 
 
@@ -67,25 +67,53 @@ class Estacion(models.Model):
         estaciones = self.env["mo.estacion"].search([])
         print("Si entra")
         for estacion in estaciones:
-            print(estacion.horario_id.name)
-            print("--")
-            print(datetime.today().strftime('%A'))
-            if str(estacion.horario_id.name) == str(datetime.today().strftime('%A')):
-                print("SI entra")
-                hora1 = datetime.strptime(estacion.horario_id.hora_desde, "%X").time()
-                hora2 = datetime.strptime(estacion.horario_id.hora_hasta, "%X").time()
-                hora_act = datetime.now().time()
-                print(hora1)
-                print(hora2)
-                print(hora_act)
-                if hora2 > hora1:
-                    if hora_act > hora1 and hora_act < hora2:
-                        print("Hola")
+            #periodos = self.env['mo.horario'].search([('id', 'in', estacion.horario_id)])
+            for periodo in estacion.horario_id:
+                print(periodo.name)
+                print("--")
+                print(datetime.today().strftime('%A'))
+                if str(periodo.name) == str(datetime.today().strftime('%A')):
+                    print("SI entra")
+                    aux_hora1 = str(periodo.hora_desde).replace(".", ":")
+                    aux_hora2 = str(periodo.hora_hasta).replace(".", ":")
+                    print(aux_hora1)
+                    print(aux_hora2)
+                    hora1 = datetime.strptime(aux_hora1+":00", "%X").time()
+                    hora2 = datetime.strptime(aux_hora2+":00", "%X").time()
+                    hora_act = datetime.now().time()
+                    print(hora1)
+                    print(hora2)
+                    print(hora_act)
+                    if hora2 > hora1:
+                        print("mayor")
+                        if hora_act > hora1 and hora_act < hora2:
+                            print("tambien")
+                            self.refrescarSensor(estacion)
 
-                #docente.write({'plan_id': plan})
-                #self.env.cr.commit()
 
-        
+    def refrescarSensor(self, estacion):
+        print("maosada")
+        url = str(estacion.url_servicio)
+        print(url)
+        data = requests.get(url)
+        valores = data.text
+        aux_seperar = valores.split('-')
+        if len(aux_seperar) > 3:
+            estacion.write({'temperatura': aux_seperar[0]})
+            estacion.write({'humedad': aux_seperar[1]})
+            estacion.write({'co2': aux_seperar[2]})
+            estacion.write({'tvoc': aux_seperar[3]})
+            estacion.env.cr.commit()
 
+
+    def notificar(self):
+        print("Entra a notificar")
+        estaciones = self.env["mo.estacion"].search([])
+        for estacion in estaciones:
+            if estacion.co2 > 700 and estacion.humedad>=50 and  estacion.humedad<=60 \
+                    and estacion.temperatura>=17 and estacion.temperatura<=24:
+                print("Posiblemente exista covid")
+            else:
+                print("Todo bn")
 
 
