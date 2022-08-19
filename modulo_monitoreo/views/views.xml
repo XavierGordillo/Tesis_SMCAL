@@ -59,6 +59,7 @@
                         <group>
                             <group>
                                 <field name="name" required="1"/>
+                                <field name="user_id"/>
                                 <field name="url_servicio" required="1"/>
                                 <button
                                     string="Validar URL"
@@ -80,8 +81,9 @@
                             <field name="horario_id"/>
                         </group>
                         <group>
-                            <field name="validar" required="1"/>
-                            <field name="estado" required="1"/>
+                            <field name="validar"/>
+                            <field name="estado"/>
+                            <field name="bool_notificar"/>
                         </group>
                     </sheet>
                 </form>
@@ -214,6 +216,20 @@
             <field name="act_window_id" ref="action_view_horario"/>
         </record>
 
+        <!--Accion de ventana Reporte-->
+        <record id="action_view_reporte" model="ir.actions.act_window">
+            <field name="name">Reportes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mo.reporte</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="search_view_id" ref="da_silabo.view_docente_search_valoracion"/>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear un nuevo Estaciones para visualizar reportes
+                </p>
+            </field>
+        </record>
+
 
 
         <!--MENÚ-->
@@ -251,7 +267,7 @@
         <menuitem id="menu_Co2"
                   name="Datos Co2"
                   parent="modulo_monitoreo.menu_visualizar"
-                  action="modulo_monitoreo.action_view_estacion"/>
+                  action="modulo_monitoreo.action_view_reporte"/>
 
         <menuitem id="menu_humedad"
                   name="Datos humedad"
