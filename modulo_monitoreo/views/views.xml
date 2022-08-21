@@ -139,6 +139,22 @@
             </field>
         </record>
 
+        <!--Vista Tree Reporte-->
+        <record id="view_tree_reporte" model="ir.ui.view">
+            <field name="name">view.tree.mo.horario</field>
+            <field name="model">mo.reporte</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="Fecha"/>
+                    <field name="estacion"/>
+                    <field name="temperatura"/>
+                    <field name="humedad"/>
+                    <field name="co2"/>
+                    <field name="tvoc"/>
+                </tree>
+            </field>
+        </record>
+
          <!--act_window-->
         <!--Accion de ventana Usuario-->
         <record id="action_view_encargado" model="ir.actions.act_window">
@@ -216,12 +232,55 @@
             <field name="act_window_id" ref="action_view_horario"/>
         </record>
 
+        <!--Vista Graph Tarea-->
+        <record id="view_graph_reporte" model="ir.ui.view">
+            <field name="name">view.graph.mo.reporte</field>
+            <field name="model">mo.reporte</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Reporte variables calidad del aire" interval="day">
+                    <field name="name" type="col"/>
+                    <field name="temperatura" type="measure"/>
+                    <!--<field name="humedad"/>
+                    <field name="co2"/>
+                    <field name="tvoc"/>-->
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="view_search_reporte" model="ir.ui.view">
+            <field name="name">view.search.mo.reporte</field>
+            <field name="model">mo.reporte</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="estacion"/>
+                    <field name="name"/>
+                    <separator/>
+                    <filter name="filter_today"
+                            string="Hoy"
+                            domain="[('date','&gt;=',datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),
+                            ('date','&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter name="filter_this_week"
+                            string="Ultimos 7 dias"
+                            domain="[('date','&lt;=',context_today().strftime('%Y-%m-%d 23:59:59')),
+                            ('date','&gt;=',(context_today()-datetime.timedelta(days=7)).strftime('%Y-%m-%d 00:00:00'))]"/>
+
+                    <separator/>
+                    <filter name="group_date"
+                            string="Fecha"
+                            context="{'group_by':'date'}"/>
+                </search>
+            </field>
+        </record>
+
+
         <!--Accion de ventana Reporte-->
         <record id="action_view_reporte" model="ir.actions.act_window">
             <field name="name">Reportes</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mo.reporte</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
             <!--<field name="search_view_id" ref="da_silabo.view_docente_search_valoracion"/>-->
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
@@ -230,8 +289,21 @@
             </field>
         </record>
 
+        <!--Accion de ventana graph reporte-->
+        <record id="action_view_reporte_graph" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="modulo_monitoreo.view_graph_reporte"/>
+            <field name="act_window_id" ref="action_view_reporte"/>
+        </record>
 
-
+        <!--Accion de ventana Tree reporte-->
+        <record id="action_view_reporte_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="modulo_monitoreo.view_tree_reporte"/>
+            <field name="act_window_id" ref="action_view_reporte"/>
+        </record>
         <!--MENÚ-->
         <menuitem id="menu_main_monitoreo_calidad_aire"
                    name="Monitoreo CA"
@@ -242,7 +314,7 @@
 
 
         <menuitem id="menu_encargado"
-                  name="Encargados de Laborstorio"
+                  name="Encargados de Laboratorio"
                   sequence = "1"
                   groups = "modulo_monitoreo.res_groups_administrador"
                   parent="menu_main_monitoreo_calidad_aire"
@@ -270,9 +342,9 @@
                   action="modulo_monitoreo.action_view_reporte"/>
 
         <menuitem id="menu_humedad"
-                  name="Datos humedad"
+                  name="Acciones Planificadas"
                   parent="modulo_monitoreo.menu_visualizar"
-                  action="modulo_monitoreo.action_view_estacion"/>
+                  action="base.ir_cron_act"/>
 
         <menuitem id="menu_temperatura"
                   name="Datos temperatura"

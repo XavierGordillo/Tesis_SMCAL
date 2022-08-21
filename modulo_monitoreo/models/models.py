@@ -119,7 +119,9 @@ class Estacion(models.Model):
                     'humedad': aux_seperar[1],
                     'co2': aux_seperar[2],
                     'tvoc': aux_seperar[3],
-                    'name': today,
+                    'name': str(today),
+                    'estacion': estacion.name,
+                    'date': today
                 })
                 print("Si llega")
 
@@ -151,11 +153,15 @@ class Reporte(models.Model):
     _name = "mo.reporte"
     _description = "Reporte"
 
-    name = fields.Datetime(string="Fecha")
+    name = fields.Char(string="Fecha")
     temperatura = fields.Float(string="Temperatura")
     humedad = fields.Float(string="Húmedad")
     co2 = fields.Float(string="Nivel de CO2")
     tvoc = fields.Float(string="TVOC")
+    estacion = fields.Char(string="Estación")
+    date = fields.Datetime(string="Date")
+
+
 
 
 

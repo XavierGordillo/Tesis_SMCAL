@@ -9,7 +9,7 @@
      <field name="numbercall">-1</field>
      <field name="doall">False</field>
      <field name="active">True</field>
-     <field name="interval_number">1</field>
+     <field name="interval_number">5</field>
      <field name="model_id" ref="modulo_monitoreo.model_mo_estacion"/>
    </record>
  </data>
@@ -22,7 +22,7 @@
      <field name="numbercall">-1</field>
      <field name="doall">False</field>
      <field name="active">True</field>
-     <field name="interval_number">1</field>
+     <field name="interval_number">5</field>
      <field name="model_id" ref="modulo_monitoreo.model_mo_estacion"/>
    </record>
   </data>
