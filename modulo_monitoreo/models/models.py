@@ -48,7 +48,8 @@ class Estacion(models.Model):
 
     horario_id = fields.One2many("mo.horario", "estacion_ids")
 
-    user_id = fields.Many2one("res.users", string="Encargado", required=True, ondelete="cascade", default=lambda self: self.env.uid)
+    user_id = fields.Many2one("res.users", string="Encargado", required=True,
+                                ondelete="cascade", default=lambda self: self.env.uid)
 
 
     _sql_constrainst = [
@@ -112,7 +113,7 @@ class Estacion(models.Model):
                 estacion.write({'tvoc': aux_seperar[3]})
                 estacion.env.cr.commit()
                 today = fields.datetime.now()
-                print("Vamos con la hoara")
+                print("Vamos con la hora")
                 print(today)
                 self.env['mo.reporte'].create({
                     'temperatura': aux_seperar[0],
