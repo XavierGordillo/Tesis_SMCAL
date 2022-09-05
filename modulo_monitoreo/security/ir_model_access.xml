@@ -37,8 +37,8 @@
         <field name="name">model.access.reporte.admin</field>
         <field name="model_id" ref="modulo_monitoreo.model_mo_reporte"/>
         <field name="group_id" ref="modulo_monitoreo.res_groups_administrador"/><!--Administracion/Ajustes-->
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
         <field name="perm_unlink" eval="1"/>
         <field name="perm_read" eval="1"/>
     </record>
@@ -48,8 +48,8 @@
         <field name="name">model.access.reporte.encargado</field>
         <field name="model_id" ref="modulo_monitoreo.model_mo_reporte"/>
         <field name="group_id" ref="modulo_monitoreo.res_groups_encargadolab"/><!--Administracion/Ajustes-->
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
         <field name="perm_unlink" eval="1"/>
         <field name="perm_read" eval="1"/>
     </record>

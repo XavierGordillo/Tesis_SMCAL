@@ -103,7 +103,10 @@ class Estacion(models.Model):
             print("maosada")
             url = str(estacion.url_servicio)
             print(url)
-            data = requests.get(url)
+            try:
+                data = requests.get(url)
+            except:
+                data = "0-0-0-0"
             valores = data.text
             aux_seperar = valores.split('-')
             if len(aux_seperar) > 3:
